@@ -1,0 +1,24 @@
+{
+    "name": "martynbiz/zendx",
+    "type": "library",
+    "description": "Extensions for Zend Framework 1",
+    "keywords": ["zend", "mvc"],
+    "homepage": "http://github.com/martynbiz/zendx",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martyn Bissett",
+            "email": "martynbissett@yahoo.co.uk",
+            "homepage": "http://ma.rtyn.biz",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "": "application/library"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.*"
+    }
+}
