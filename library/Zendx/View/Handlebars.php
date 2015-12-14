@@ -22,7 +22,10 @@ class Zendx_View_Handlebars extends Zend_View
             $data = $this->getVars();
 
             // it may get mad at this part!
-            $scriptPath = $this->getScriptPath($name);
+            if(! $scriptPath = $this->getScriptPath($name)) {
+                return false;
+            }
+
             $template = file_get_contents($scriptPath);
 
             // render

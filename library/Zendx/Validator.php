@@ -14,7 +14,7 @@
 */
 abstract class Zendx_Validator {
 
-	/**
+    /**
     * Will contain the errors for the duration of the objects existence
     * @var errors
     */
@@ -38,22 +38,7 @@ abstract class Zendx_Validator {
     */
     protected $checking = true;
 
-    /**
-     * @var array $customValidators
-     */
-    protected $customValidators = array();
-
     // other functions
-
-    /**
-     * Singleton
-     */
-    public static function getInstance() {
-        if ( !(self::$_instance instanceof self) ) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
-    }
 
     /**
     * Log an error
@@ -154,50 +139,6 @@ abstract class Zendx_Validator {
 
         return $this;
     }
-
-    /**
-     * Register custom validators
-     * @param string $name
-     * @param mixed $handler
-     */
-    public function register($name, $handler)
-    {
-        $this->customValidators[$name] = $handler;
-    }
-
-    /**
-     * Will handle calls for custom validators
-     * @throws Exception If validator not found in $customValidators
-     */
-     public function __call($name, $args)
-     {
-         // remove the message from the arguments as it's not required for
-         // the handler
-         $message = array_pop($args);
-
-        //  // push the value as we'll need to pass that into the handler
-        //  // in our handler, we must always expect the $value to be the last
-        //  // argument
-        //  array_push($args, $this->value);
-
-         if (isset($this->customValidators[$name])) {
-
-             // by binding $this, we can access $this->value
-             $validator = \Closure::bind($this->customValidators[$name], $this);
-
-             // call the validator
-             $result = $validator(...$args); // [1, 2, 3] => func($a, $b, $c)
-
-             // log error if failed
-             if (! $result)
-                $this->logError($this->key, $message);
-
-             return $this;
-
-         } else {
-             throw new Exception('Validator "' . $name . '" not found.');
-         }
-     }
 
 
     /**
